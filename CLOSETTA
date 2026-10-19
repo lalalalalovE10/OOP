@@ -1,0 +1,228 @@
+package com.mycompany.closetta;
+
+import java.util.Scanner;
+
+public class CLOSETTA {
+    private static final Scanner input = new Scanner(System.in);
+    private static final FashionItem[] wardrobe = new FashionItem[10];
+    private static int jumlahItem = 0;
+
+    public static void main(String[] args) {
+        int pilihan;
+
+        do {
+            System.out.println("\n==================================");
+            System.out.println("       CLOSETTA WARDROBE");
+            System.out.println("    Every piece has its place.");
+            System.out.println("==================================");
+            System.out.println("1. Tambah Item");
+            System.out.println("2. Lihat Wardrobe");
+            System.out.println("3. Cari Item");
+            System.out.println("4. Proses Item");
+            System.out.println("5. Keluar");
+            System.out.print("Pilih menu: ");
+            pilihan = bacaAngka();
+
+            switch (pilihan) {
+                case 1:
+                    tambahItem();
+                    break;
+                case 2:
+                    lihatWardrobe();
+                    break;
+                case 3:
+                    menuCariItem();
+                    break;
+                case 4:
+                    menuProsesItem();
+                    break;
+                case 5:
+                    System.out.println("Terima kasih telah menggunakan CLOSETTA!");
+                    System.out.println("Total item berhasil dibuat: "
+                            + FashionItem.totalItemBerhasilDibuat);
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid!");
+            }
+        } while (pilihan != 5);
+
+        input.close();
+    }
+
+    private static int bacaAngka() {
+        while (!input.hasNextInt()) {
+            System.out.print("Masukkan angka yang valid: ");
+            input.nextLine();
+        }
+
+        int angka = input.nextInt();
+        input.nextLine();
+        return angka;
+    }
+
+    private static String bacaTeks(String pesan) {
+        System.out.print(pesan);
+        return input.nextLine();
+    }
+
+    private static void tambahItem() {
+        if (jumlahItem >= wardrobe.length) {
+            System.out.println("Wardrobe penuh! Tidak dapat menambah item.");
+            return;
+        }
+
+        System.out.println("\n--- Tambah Item ---");
+        System.out.println("1. Clothing");
+        System.out.println("2. Accessory");
+        System.out.println("3. Bag");
+        System.out.print("Pilih jenis item: ");
+        int jenis = bacaAngka();
+
+        if (jenis < 1 || jenis > 3) {
+            System.out.println("Jenis item tidak valid!");
+            return;
+        }
+
+        String id = bacaTeks("ID: ");
+        String nama = bacaTeks("Nama item: ");
+        String brand = bacaTeks("Brand: ");
+        String warna = bacaTeks("Warna: ");
+
+        FashionItem item;
+
+        switch (jenis) {
+            case 1:
+                String jenisPakaian = bacaTeks("Jenis pakaian: ");
+                String ukuran = bacaTeks("Ukuran: ");
+                item = new Clothing(id, nama, brand, warna,
+                        jenisPakaian, ukuran);
+                break;
+
+            case 2:
+                String jenisAksesori = bacaTeks("Jenis aksesori: ");
+                String materialAksesori = bacaTeks("Material: ");
+                item = new Accessory(id, nama, brand, warna,
+                        jenisAksesori, materialAksesori);
+                break;
+
+            default:
+                String jenisTas = bacaTeks("Jenis tas: ");
+                String materialTas = bacaTeks("Material: ");
+                item = new Bag(id, nama, brand, warna,
+                        jenisTas, materialTas);
+                break;
+        }
+
+        wardrobe[jumlahItem] = item;
+        jumlahItem++;
+
+        System.out.println("Item berhasil ditambahkan ke wardrobe!");
+    }
+
+    private static void lihatWardrobe() {
+        System.out.println("\n--- Isi Wardrobe CLOSETTA ---");
+
+        if (jumlahItem == 0) {
+            System.out.println("Wardrobe masih kosong.");
+            return;
+        }
+
+        for (int i = 0; i < jumlahItem; i++) {
+            System.out.print((i + 1) + ". ");
+            wardrobe[i].tampilkanInfo();
+        }
+
+        System.out.println("Total item di wardrobe: " + jumlahItem);
+    }
+
+    private static void menuCariItem() {
+        if (jumlahItem == 0) {
+            System.out.println("Wardrobe masih kosong.");
+            return;
+        }
+
+        System.out.println("\n--- Cari Item ---");
+        System.out.println("1. Cari berdasarkan nama");
+        System.out.println("2. Cari berdasarkan nomor item");
+        System.out.print("Pilih metode pencarian: ");
+        int pilihan = bacaAngka();
+
+        if (pilihan == 1) {
+            String nama = bacaTeks("Masukkan nama item: ");
+            cariItem(nama, wardrobe, jumlahItem);
+        } else if (pilihan == 2) {
+            System.out.print("Masukkan nomor item: ");
+            int nomor = bacaAngka();
+            cariItem(nomor, wardrobe, jumlahItem);
+        } else {
+            System.out.println("Pilihan tidak valid!");
+        }
+    }
+
+    // Method overloading: pencarian berdasarkan nama.
+    public static void cariItem(String nama, FashionItem[] wardrobe,
+                                int jumlahItem) {
+        boolean ditemukan = false;
+
+        for (int i = 0; i < jumlahItem; i++) {
+            if (wardrobe[i].getNama().equalsIgnoreCase(nama)) {
+                System.out.println("Item ditemukan:");
+                wardrobe[i].tampilkanInfo();
+                ditemukan = true;
+            }
+        }
+
+        if (!ditemukan) {
+            System.out.println("Item dengan nama \"" + nama
+                    + "\" tidak ditemukan.");
+        }
+    }
+
+    public static void cariItem(int nomorItem, FashionItem[] wardrobe,
+                                int jumlahItem) {
+        if (nomorItem < 1 || nomorItem > jumlahItem) {
+            System.out.println("Nomor item tidak ditemukan!");
+            return;
+        }
+
+        System.out.println("Item ditemukan:");
+        wardrobe[nomorItem - 1].tampilkanInfo();
+    }
+
+    private static void menuProsesItem() {
+        if (jumlahItem == 0) {
+            System.out.println("Wardrobe masih kosong.");
+            return;
+        }
+
+        lihatWardrobe();
+        System.out.print("Pilih nomor item yang ingin diproses: ");
+        int nomor = bacaAngka();
+
+        if (nomor < 1 || nomor > jumlahItem) {
+            System.out.println("Nomor item tidak valid!");
+            return;
+        }
+
+        prosesItem(wardrobe[nomor - 1]);
+    }
+
+    public static void prosesItem(FashionItem item) {
+        System.out.println("\n--- Proses Item CLOSETTA ---");
+
+        item.tampilkanInfo();
+        item.gunakanItem();
+
+        if (item instanceof DapatDipadukan) {
+            DapatDipadukan styling = (DapatDipadukan) item;
+            styling.tampilkanTipsStyling();
+        }
+
+        if (item instanceof DapatDirawat) {
+            DapatDirawat perawatan = (DapatDirawat) item;
+            perawatan.rawatItem();
+        }
+
+        System.out.println("Proses item selesai.");
+    }
+}
