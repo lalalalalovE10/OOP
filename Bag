@@ -1,0 +1,53 @@
+package com.mycompany.closetta;
+
+public class Bag extends FashionItem implements DapatDirawat {
+    private String jenisTas;
+    private String material;
+
+    public Bag(String id, String nama, String brand, String warna,
+               String jenisTas, String material) {
+        super(id, nama, brand, warna);
+        this.setJenisTas(jenisTas);
+        this.setMaterial(material);
+    }
+
+    public String getJenisTas() {
+        return this.jenisTas;
+    }
+
+    public void setJenisTas(String jenisTas) {
+        if (jenisTas != null && !jenisTas.trim().isEmpty())
+            this.jenisTas = jenisTas;
+        else System.out.println("Jenis tas tidak boleh kosong!");
+    }
+
+    public String getMaterial() {
+        return this.material;
+    }
+
+    public void setMaterial(String material) {
+        if (material != null && !material.trim().isEmpty())
+            this.material = material;
+        else System.out.println("Material tas tidak boleh kosong!");
+    }
+
+    @Override
+    public void tampilkanInfo() {
+        System.out.printf(
+            "[BAG] ID: %-8s | Nama: %-18s | Brand: %-15s | Warna: %-10s | Jenis: %-12s | Material: %s%n",
+            this.getId(), this.getNama(), this.getBrand(), this.getWarna(),
+            this.jenisTas, this.material
+        );
+    }
+
+    @Override
+    public void gunakanItem() {
+        System.out.println(this.getNama() + " sedang digunakan untuk membawa barang.");
+    }
+
+    @Override
+    public void rawatItem() {
+        System.out.println("Tips perawatan: Bersihkan " + this.getNama()
+                + " sesuai jenis materialnya dan simpan di tempat kering.");
+    }
+}
