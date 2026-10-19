@@ -1,0 +1,5 @@
+package com.mycompany.closetta;
+
+public interface DapatDipadukan {
+    void tampilkanTipsStyling();
+}
