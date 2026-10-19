@@ -1,0 +1,63 @@
+package com.mycompany.closetta;
+
+public abstract class FashionItem {
+    private String id;
+    private String nama;
+    private String brand;
+    private String warna;
+
+    public static int totalItemBerhasilDibuat = 0;
+
+    public FashionItem(String id, String nama, String brand, String warna) {
+        this.setId(id);
+        this.setNama(nama);
+        this.setBrand(brand);
+        this.setWarna(warna);
+        totalItemBerhasilDibuat++;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        if (id != null && !id.trim().isEmpty()) this.id = id;
+        else System.out.println("ID tidak boleh kosong!");
+    }
+
+    public String getNama() {
+        return this.nama;
+    }
+
+    public void setNama(String nama) {
+        if (nama != null && !nama.trim().isEmpty()) this.nama = nama;
+        else System.out.println("Nama item tidak boleh kosong!");
+    }
+
+    public String getBrand() {
+        return this.brand;
+    }
+
+    public void setBrand(String brand) {
+        if (brand != null && !brand.trim().isEmpty()) this.brand = brand;
+        else System.out.println("Brand tidak boleh kosong!");
+    }
+
+    public String getWarna() {
+        return this.warna;
+    }
+
+    public void setWarna(String warna) {
+        if (warna != null && !warna.trim().isEmpty()) this.warna = warna;
+        else System.out.println("Warna tidak boleh kosong!");
+    }
+
+    public void tampilkanInfo() {
+        System.out.printf(
+            "[FASHION ITEM] ID: %-8s | Nama: %-18s | Brand: %-15s | Warna: %-10s%n",
+            this.id, this.nama, this.brand, this.warna
+        );
+    }
+
+    public abstract void gunakanItem();
+}
