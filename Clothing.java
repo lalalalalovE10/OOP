@@ -1,14 +1,17 @@
 package com.mycompany.closetta;
 
-public class Clothing extends FashionItem {
-
+public class Clothing extends FashionItem implements DapatDipadukan, DapatDirawat {
     private String jenisPakaian;
     private String ukuran;
 
     public Clothing(String id, String nama, String brand, String warna,
-                     String jenisPakaian, String ukuran) {
-
+                    String jenisPakaian, String ukuran)
+            throws exception {
         super(id, nama, brand, warna);
+        if (jenisPakaian == null || jenisPakaian.trim().isEmpty())
+            throw new exception("Jenis pakaian tidak boleh kosong!");
+        if (ukuran == null || ukuran.trim().isEmpty())
+            throw new exception("Ukuran tidak boleh kosong!");
 
         this.setJenisPakaian(jenisPakaian);
         this.setUkuran(ukuran);
@@ -19,11 +22,10 @@ public class Clothing extends FashionItem {
     }
 
     public void setJenisPakaian(String jenisPakaian) {
-        if (jenisPakaian != null && !jenisPakaian.trim().isEmpty()) {
+        if (jenisPakaian != null && !jenisPakaian.trim().isEmpty())
             this.jenisPakaian = jenisPakaian;
-        } else {
+        else
             System.out.println("Jenis pakaian tidak boleh kosong!");
-        }
     }
 
     public String getUkuran() {
@@ -31,23 +33,35 @@ public class Clothing extends FashionItem {
     }
 
     public void setUkuran(String ukuran) {
-        if (ukuran != null && !ukuran.trim().isEmpty()) {
+        if (ukuran != null && !ukuran.trim().isEmpty())
             this.ukuran = ukuran;
-        } else {
+        else
             System.out.println("Ukuran tidak boleh kosong!");
-        }
     }
 
     @Override
     public void tampilkanInfo() {
         System.out.printf(
-                "[CLOTHING] ID: %-8s | Nama: %-18s | Brand: %-15s | Warna: %-10s | Jenis: %-12s | Ukuran: %s%n",
-                this.getId(),
-                this.getNama(),
-                this.getBrand(),
-                this.getWarna(),
-                this.jenisPakaian,
-                this.ukuran
+            "[CLOTHING] ID: %-8s | Nama: %-18s | Brand: %-15s | Warna: %-10s | Jenis: %-12s | Ukuran: %s%n",
+            this.getId(), this.getNama(), this.getBrand(), this.getWarna(),
+            this.jenisPakaian, this.ukuran
         );
+    }
+
+    @Override
+    public void gunakanItem() {
+        System.out.println(this.getNama() + " sedang dikenakan.");
+    }
+
+    @Override
+    public void tampilkanTipsStyling() {
+        System.out.println("Tips styling: Padukan " + this.getNama()
+                + " dengan bawahan dan aksesori yang sesuai.");
+    }
+
+    @Override
+    public void rawatItem() {
+        System.out.println("Tips perawatan: Cuci " + this.getNama()
+                + " sesuai petunjuk pada label pakaian.");
     }
 }

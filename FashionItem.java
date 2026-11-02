@@ -1,7 +1,6 @@
 package com.mycompany.closetta;
 
-public class FashionItem {
-
+public abstract class FashionItem {
     private String id;
     private String nama;
     private String brand;
@@ -9,12 +8,21 @@ public class FashionItem {
 
     public static int totalItemBerhasilDibuat = 0;
 
-    public FashionItem(String id, String nama, String brand, String warna) {
-        this.setId(id);
-        this.setNama(nama);
-        this.setBrand(brand);
-        this.setWarna(warna);
+    public FashionItem(String id, String nama, String brand, String warna)
+            throws exception {
+        if (id == null || id.trim().isEmpty())
+            throw new exception("ID item tidak boleh kosong!");
+        if (nama == null || nama.trim().isEmpty())
+            throw new exception("Nama item tidak boleh kosong!");
+        if (brand == null || brand.trim().isEmpty())
+            throw new exception("Brand tidak boleh kosong!");
+        if (warna == null || warna.trim().isEmpty())
+            throw new exception("Warna tidak boleh kosong!");
 
+        this.id = id;
+        this.nama = nama;
+        this.brand = brand;
+        this.warna = warna;
         totalItemBerhasilDibuat++;
     }
 
@@ -23,11 +31,10 @@ public class FashionItem {
     }
 
     public void setId(String id) {
-        if (id != null && !id.trim().isEmpty()) {
+        if (id != null && !id.trim().isEmpty())
             this.id = id;
-        } else {
+        else
             System.out.println("ID tidak boleh kosong!");
-        }
     }
 
     public String getNama() {
@@ -35,11 +42,10 @@ public class FashionItem {
     }
 
     public void setNama(String nama) {
-        if (nama != null && !nama.trim().isEmpty()) {
+        if (nama != null && !nama.trim().isEmpty())
             this.nama = nama;
-        } else {
+        else
             System.out.println("Nama item tidak boleh kosong!");
-        }
     }
 
     public String getBrand() {
@@ -47,11 +53,10 @@ public class FashionItem {
     }
 
     public void setBrand(String brand) {
-        if (brand != null && !brand.trim().isEmpty()) {
+        if (brand != null && !brand.trim().isEmpty())
             this.brand = brand;
-        } else {
+        else
             System.out.println("Brand tidak boleh kosong!");
-        }
     }
 
     public String getWarna() {
@@ -59,20 +64,18 @@ public class FashionItem {
     }
 
     public void setWarna(String warna) {
-        if (warna != null && !warna.trim().isEmpty()) {
+        if (warna != null && !warna.trim().isEmpty())
             this.warna = warna;
-        } else {
+        else
             System.out.println("Warna tidak boleh kosong!");
-        }
     }
 
     public void tampilkanInfo() {
         System.out.printf(
-                "[FASHION ITEM] ID: %-8s | Nama: %-18s | Brand: %-15s | Warna: %-10s%n",
-                this.id,
-                this.nama,
-                this.brand,
-                this.warna
+            "[FASHION ITEM] ID: %-8s | Nama: %-18s | Brand: %-15s | Warna: %-10s%n",
+            this.id, this.nama, this.brand, this.warna
         );
     }
+
+    public abstract void gunakanItem();
 }
