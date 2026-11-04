@@ -55,13 +55,11 @@ public class Clothing extends FashionItem implements DapatDipadukan, DapatDirawa
 
     @Override
     public void tampilkanTipsStyling() {
-        System.out.println("Tips styling: Padukan " + this.getNama()
-                + " dengan bawahan dan aksesori yang sesuai.");
+        System.out.println("Tips styling: Padukan " + this.getNama() + " dengan bawahan dan aksesori yang sesuai.");
     }
 
     @Override
     public void rawatItem() {
-        System.out.println("Tips perawatan: Cuci " + this.getNama()
-                + " sesuai petunjuk pada label pakaian.");
+        System.out.println("Tips perawatan: Cuci " + this.getNama() + " sesuai petunjuk pada label pakaian.");
     }
 }
